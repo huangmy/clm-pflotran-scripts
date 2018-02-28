@@ -79,9 +79,9 @@ cd $CLM_SRC_DIR
 ```
 cd $BASE_DIR
 mkdir cases
-git clone git@bitbucket.org:pnnl_sbr_sfa/notes-for-gmd-2017-35.git
+git clone git@github.com:huangmy/clm-pflotran-scripts.git
 setenv CASE_DIR $BASE_DIR/cases
-cd $BASE_DIR/notes-for-gmd-2017-35
+cd $BASE_DIR/clm-pflotran-scripts
 setenv INPUTDATA_DIR ${PWD}/datasets
 ```
 
