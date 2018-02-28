@@ -1,6 +1,6 @@
 
 We provide detailed notes on running the coupled CLM-PFLOTRAN model
-on NERSC's Edison supercomputer.
+on NERSC's Cori supercomputer.
 
 
 ### Install PETSc
@@ -108,7 +108,7 @@ ${INPUTDATA_DIR}/cesm-inputdata/lnd/clm2/snicardata/snicar_optics_5bnd_c090915.n
 
 ```
 
-### Create a CLM-PFLOTRAN case
+### Create a CLM-PFLOTRAN case, only support 2m/10m resolutions for now
 ```
 ./create_case.sh                       \
 -clm_source_dir      $CLM_SRC_DIR      \

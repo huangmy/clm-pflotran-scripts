@@ -1,0 +1,91 @@
+#
+# Makefile Macros generated from /global/cscratch1/sd/mhuang/cesm_archive/IM3/cesm1.2.2/scripts/ccsm_utils/Machines/config_compilers.xml using
+# COMPILER=intel
+# OS=CNL
+# MACH=corip1
+#
+
+include PETSC-DIR/cori_intel_O/lib/petsc/conf/petscvariables
+
+CPPDEFS+= -DFORTRANUNDERSCORE -DNO_R16 -DLINUX  -DCNL -DCPRINTEL 
+
+LDFLAGS+= $(MKL) 
+
+SLIBS+= -L$(NETCDF_DIR) -lnetcdff -Wl,--as-needed,-L$(NETCDF_DIR)/lib -lnetcdff -lnetcdf 
+
+CFLAGS:= -O2 -fp-model precise 
+
+CMAKE_OPTS:= -DCMAKE_SYSTEM_NAME=Catamount
+
+CONFIG_ARGS:= --host=Linux 
+
+CXX_LDFLAGS:= -cxxlib 
+
+CXX_LINKER:=FORTRAN
+
+FC_AUTO_R8:= -r8 
+
+FFLAGS:= -qno-opt-dynamic-align  -fp-model source -convert big_endian -assume byterecl -ftz -traceback -assume realloc_lhs 
+
+FFLAGS_NOOPT:= -O0 
+
+FIXEDFLAGS:= -fixed -132 
+
+FREEFLAGS:= -free 
+
+MPICC:= cc 
+
+MPICXX:= CC 
+
+MPIFC:= ftn 
+
+MPI_LIB_NAME:= mpich 
+
+MPI_PATH:= $(MPICH_DIR)
+
+NETCDF_PATH:= $(NETCDF_DIR)
+
+PIO_FILESYSTEM_HINTS:=lustre
+
+PNETCDF_PATH:= $(PARALLEL_NETCDF_DIR)
+
+SCC:= cc 
+
+SCXX:= CC 
+
+SFC:= ftn 
+
+SUPPORTS_CXX:=TRUE
+
+# linking to external libraries...
+USER_INCLDIR  = -IPETSC-DIR/PETSC-ARCH/include
+USER_INCLDIR += -IPETSC-DIR/include
+USER_INCLDIR += -IPFLOTRAN-SRC-DIR/src/clm-pflotran
+FFLAGS       += -DCLM_PFLOTRAN
+
+ifeq ($(DEBUG), TRUE) 
+   FFLAGS += -O0 -g -check uninit -check bounds -check pointers -fpe0 
+endif
+
+ifeq ($(DEBUG), FALSE) 
+   FFLAGS += -O2  
+   CFLAGS += -O2  
+endif
+
+ifeq ($(MODEL), pop2) 
+   CPPDEFS += -D_USE_FLOW_CONTROL 
+endif
+
+ifeq ($(MODEL), driver)
+   LDFLAGS += PFLOTRAN-SRC-DIR/src/clm-pflotran/libpflotran.a
+   LDFLAGS += -LPETSC-DIR/PETSC-ARCH/lib $(PETSC_LIB)
+   LDFLAGS += -L${HDF5_LIB} -lhdf5_fortran -lhdf5 -lz
+   LDFLAGS += -L/opt/cray/pe/netcdf-hdf5parallel/4.4.1.1.3/INTEL/160/lib -lnetcdf -lnetcdf_c++4_parallel_intel -lnetcdff_parallel_intel -lnetcdf_parallel_intel
+endif
+
+ifeq ($(compile_threaded), true) 
+   FFLAGS += -openmp 
+   LDFLAGS += -openmp 
+   CFLAGS += -openmp 
+endif
+
